@@ -1,0 +1,131 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 216 28% 7%;
+    --foreground: 210 20% 98%;
+
+    --card: 222 30% 10%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 222 30% 10%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 100% 56%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 222 30% 15%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 222 30% 15%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 271 91% 65%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 210 100% 56%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 222 30% 10%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 210 100% 56%;
+    --sidebar-primary-foreground: 210 20% 98%;
+    --sidebar-accent: 222 30% 15%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 222 30% 18%;
+    --sidebar-ring: 210 100% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  /* 防止双击缩放 */
+  * {
+    touch-action: manipulation;
+  }
+  
+  /* 优化移动端滚动 */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+  }
+  
+  /* 优化输入框在iOS上的表现 */
+  input, textarea {
+    font-size: 16px; /* 防止iOS自动缩放 */
+  }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* Radix ScrollArea 滚动条样式增强 */
+[data-radix-scroll-area-viewport] {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.3) hsl(var(--secondary));
+}
+
+/* 移动端触摸优化 */
+@media (max-width: 768px) {
+  [data-radix-scroll-area-viewport] {
+    /* 启用移动端平滑滚动 */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* 输入框动画 */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: hsl(var(--border));
+  }
+  50% {
+    border-color: hsl(var(--primary) / 0.5);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}

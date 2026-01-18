@@ -1,0 +1,20 @@
+-- 创建用户反馈表
+create table if not exists model_feedback (
+  id uuid primary key default gen_random_uuid(),
+  model_name text not null,
+  model_version text,
+  feedback_content text not null,
+  created_at timestamp with time zone default now()
+);
+
+-- 创建索引
+create index if not exists model_feedback_created_at_idx on model_feedback(created_at);
+
+-- 启用RLS
+alter table model_feedback enable row level security;
+
+-- 创建策略（允许所有操作）
+create policy "Allow all operations on model_feedback"
+  on model_feedback for all
+  using (true)
+  with check (true);

@@ -1,0 +1,27 @@
+-- 创建模型配置表
+create table if not exists ai_models (
+  id uuid primary key default gen_random_uuid(),
+  provider text not null,
+  model_name text not null,
+  model_version text not null,
+  api_endpoint text,
+  is_default boolean default false,
+  created_at timestamp with time zone default now()
+);
+
+-- 插入默认模型配置
+insert into ai_models (provider, model_name, model_version, is_default) values
+('doubao', '豆包', 'Doubao-pro-32k', true),
+('doubao', '豆包', 'Doubao-lite-4k', false),
+('deepseek', 'DeepSeek', 'deepseek-chat', true),
+('deepseek', 'DeepSeek', 'deepseek-coder', false),
+('wenxin', '文心一言', 'ERNIE-Bot-4', true),
+('wenxin', '文心一言', 'ERNIE-Bot-turbo', false);
+
+-- 启用RLS
+alter table ai_models enable row level security;
+
+-- 创建策略
+create policy "Allow read access to ai_models"
+  on ai_models for select
+  using (true);
